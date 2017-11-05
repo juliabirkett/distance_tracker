@@ -14,6 +14,11 @@ defmodule DistanceTracker.ErrorViewTest do
            %{errors: %{detail: "Internal server error"}}
   end
 
+  test "render 422.json" do
+    assert render(DistanceTracker.ErrorView, "422.json", []) ==
+           %{errors: %{detail: "Bad Request"}}
+  end
+
   test "render any other" do
     assert render(DistanceTracker.ErrorView, "505.json", []) ==
            %{errors: %{detail: "Internal server error"}}
