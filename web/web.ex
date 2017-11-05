@@ -48,7 +48,6 @@ defmodule DistanceTracker.Web do
       import Phoenix.Controller, only: [get_flash: 2, view_module: 1]
 
       import DistanceTracker.Router.Helpers
-      import DistanceTracker.ErrorHelpers
       import DistanceTracker.Gettext
     end
   end
