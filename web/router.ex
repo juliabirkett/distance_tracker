@@ -8,6 +8,6 @@ defmodule DistanceTracker.Router do
   scope "/api", DistanceTracker do
     pipe_through :api
 
-    resources "/", TrackerController, only: [:index]
+    resources "/", TrackerController, only: [:index, :show]
   end
 end

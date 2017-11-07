@@ -3,26 +3,44 @@ defmodule DistanceTracker.TrackerViewTest do
   use ModelCase
   import Factory
 
-  test "renders index.json" do
+  test "renders index.json with data" do
     tracker = build(:tracker)
 
     assert TrackerView.render("index.json", %{trackers: [tracker]}) ==
-      rendered_trackers(%{trackers: [tracker]})
+      rendered_trackers([tracker])
   end
 
-  def rendered_tracker(%{tracker: tracker}) do
+  test "renders index.json without data" do
+    assert TrackerView.render("index.json", %{trackers: []}) ==
+      rendered_trackers([])
+  end
+
+  test "renders show.json with data" do
+    tracker = build(:tracker)
+
+    assert TrackerView.render("show.json", %{tracker: tracker}) ==
+      rendered_tracker(tracker)
+  end
+
+  test "renders show.json without data" do
+    assert TrackerView.render("show.json", %{tracker: nil}) ==
+      rendered_tracker(nil)
+  end
+
+  def rendered_tracker(tracker) do
     %{
-      data: render_data(tracker)
+      data: rendered_data(tracker)
     }
   end
 
-  def rendered_trackers(%{trackers: trackers}) do
+  def rendered_trackers(trackers) do
     %{
-      data: Enum.map(trackers, &render_data/1)
+      data: Enum.map(trackers, &rendered_data/1)
     }
   end
 
-  def render_data(tracker) do
+  defp rendered_data(nil), do: nil
+  defp rendered_data(tracker) do
     %{
       uuid: tracker.uuid,
       activity: tracker.activity,

@@ -7,6 +7,12 @@ defmodule DistanceTracker.TrackerView do
     }
   end
 
+  def render("show.json", %{tracker: tracker}) do
+    %{
+      data: tracker |> render_one(DistanceTracker.TrackerView, "tracker.json")
+    }
+  end
+
   def render("tracker.json", %{tracker: tracker}) do
     %{
       uuid: tracker.uuid,
