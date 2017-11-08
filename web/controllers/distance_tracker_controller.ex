@@ -17,4 +17,21 @@ defmodule DistanceTracker.TrackerController do
         |> render(ErrorView, "404.json", [])
     end
   end
+
+  def create(conn, params) do
+    {:ok, date, _} = DateTime.from_iso8601(params["completed_at"])
+
+    changeset = Tracker.changeset(%Tracker{}, params)
+
+    with {:ok, tracker} <- Repo.insert(changeset) do
+      conn
+      |> put_status(201)
+      |> render("show.json", tracker: tracker)
+    else
+      {:error, _error} ->
+        conn
+        |> put_status(422)
+        |> render(ErrorView, "422.json", [])
+    end
+  end
 end

@@ -11,4 +11,10 @@ defmodule DistanceTracker.Tracker do
 
     timestamps()
   end
+
+  def changeset(tracker, params \\ %{}) do
+    tracker
+    |> cast(params, [:completed_at, :activity, :uuid, :distance])
+    |> validate_required([:completed_at, :activity])
+  end
 end

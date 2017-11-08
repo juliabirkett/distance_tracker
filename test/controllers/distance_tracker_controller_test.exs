@@ -32,6 +32,20 @@ defmodule DistanceTracker.TrackerControllerTest do
       render_error("404.json")
   end
 
+  test "#create renders newly created tracker when successful" do
+    conn = build_conn()
+    payload = %{
+      "activity" => "climbing",
+      "distance" => 150,
+      "completed_at" => "2017-03-21T14:00:00Z"
+    }
+
+    conn = post conn, tracker_path(conn, :create), Poison.encode!(payload)
+
+    assert json_response(conn, 201) ==
+      render_json("show.json", nil)
+  end
+
   defp render_error(template) do
     ErrorView.render(template, [])
     |> Poison.encode!
